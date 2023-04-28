@@ -1,5 +1,13 @@
 import * as dateFns from "date-fns";
-import { PeriodDay, Yesterday, StartEndWeek, Month } from "./helpers.js";
+import {
+  periodDay,
+  yesterday,
+  startEndWeek,
+  month,
+  strDatefrom,
+  strDateto,
+  url,
+} from "./helpers.js";
 
 let man = [
   { index: 1, name: "Robert", precent: 2, summ: 213000 },
@@ -8,12 +16,10 @@ let man = [
   { index: 4, name: "Riba", precent: 27, summ: 215 },
 ];
 
-for (let num of man) {
-  // console.log(num.precent);
-}
 let precent;
-let thead = document.querySelector(".thead");
-let tbody = document.querySelector("tbody");
+let thead = document.querySelector(".js-thead");
+let tbody = document.querySelector(".js-tbody");
+let table = document.querySelector(".js-table");
 
 function thCreation(classlist, text) {
   let th = document.createElement("th");
@@ -21,16 +27,23 @@ function thCreation(classlist, text) {
   th.innerText = text;
   return th;
 }
+function theadAppend() {
+  let theadFragment = new DocumentFragment();
+  thead.append(thCreation("col", "#"));
+  thead.append(thCreation("col", "Name"));
+  thead.append(thCreation("col", "Precent"));
+  thead.append(thCreation("col", "Summ"));
+  theadFragment.append(thead);
+  return theadFragment;
+}
 
-thead.append(thCreation("col", "#"));
-thead.append(thCreation("col", "Name"));
-thead.append(thCreation("col", "Precent"));
-thead.append(thCreation("col", "Summ"));
+table.append(theadAppend());
 
-function bonusCreation() {
+function tbodyCreation() {
   man.forEach((element) => {
+    // let fragment = new DocumentFragment();
     let tr = document.createElement("tr");
-    tbody.append(tr);
+
     let thFirst = document.createElement("th");
     tr.append(thFirst);
     thFirst.scope = "row";
@@ -44,9 +57,11 @@ function bonusCreation() {
     let tdForth = document.createElement("td");
     tr.append(tdForth);
     tdForth.innerHTML = element.summ;
+    tbody.append(tr);
   });
 }
-bonusCreation();
+tbodyCreation();
+
 let monthsWithQuoter = {
   0: 1,
   1: 1,
@@ -63,12 +78,6 @@ let monthsWithQuoter = {
 };
 
 let out3 = document.querySelector(".out3");
-
-let resultUrl2 = window.location.href;
-
-const url = new URL(resultUrl2);
-let strDatefrom = url.searchParams.get("date_from");
-let strDateto = url.searchParams.get("date_to");
 
 // что подаем на вход:
 //  arrDatefrom;
@@ -104,22 +113,31 @@ console.log(quarterTo);
 //   }
 // }
 // test2();
-
+const period = url.searchParams.get("period");
 /* День */
-console.log(PeriodDay());
+if (period === "day") {
+  console.log(periodDay());
+}
 
 /* День */
 
 /* Прошлый День */
-console.log(Yesterday());
+if (period === "yesterday") {
+  console.log(yesterday());
+}
+
 /* Прошлый День */
 
 /* неделя */
-console.log(StartEndWeek());
+if (period === "week") {
+  console.log(startEndWeek());
+}
+
 /* неделя */
 
 /* месяц */
-
-console.log(Month());
+if (period === "month") {
+  console.log(month());
+}
 
 /* месяц */
