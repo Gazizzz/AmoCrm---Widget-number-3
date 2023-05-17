@@ -216,56 +216,61 @@ function filterLeadsComplete(leadss, managerId) {
 }
 function renderManagers(managersArr) {
   const fragment = $(document.createDocumentFragment());
-
+  let num = 0;
   managersArr.forEach((manager, index) => {
-    let totalSumm = 0;
-    let totalSummFormatted;
-    const allLeadsCount = manager.allManagerLeads.length;
-    const percentOfCompletedLeads = allLeadsCount
-      ? Math.round((manager.leadsFilterCompany.length * 100) / allLeadsCount)
-      : 0;
-    console.log(percentOfCompletedLeads);
-    const $row = $("<tr>");
-    const $index = $("<td>").text(index + 1);
-    const $name = $("<td>").text(manager.name);
-    const $percentActiveLeads = $("<td>").text(percentOfCompletedLeads + "%");
-    manager.leadsFilterComppleted.map((item, index) => {
-      totalSumm += Number(item.lead_sum);
-      totalSummFormatted = totalSumm.toLocaleString("en-US");
-    });
+    if (
+      manager.name == "Евгения Ф. 8(909)886-75-17 (Кредитный специалист)" ||
+      manager.name == "Мариам А. 8(918)916-96-50 (Кредитный специалист)"
+    ) {
+      let totalSumm = 0;
+      let totalSummFormatted;
+      const allLeadsCount = manager.allManagerLeads.length;
+      const percentOfCompletedLeads = allLeadsCount
+        ? Math.round((manager.leadsFilterCompany.length * 100) / allLeadsCount)
+        : 0;
+      console.log(percentOfCompletedLeads);
+      const $row = $("<tr>");
+      const $index = $("<td>").text((num = num + 1));
+      const $name = $("<td>").text(manager.name);
+      const $percentActiveLeads = $("<td>").text(percentOfCompletedLeads + "%");
+      manager.leadsFilterComppleted.map((item, index) => {
+        totalSumm += Number(item.lead_sum);
+        totalSummFormatted = totalSumm.toLocaleString("en-US");
+      });
 
-    const $summ = $("<td>").text(totalSummFormatted);
-    function bonusQuarter() {
-      if (percentOfCompletedLeads <= 9) {
-        return $("<td>").text(0);
+      const $summ = $("<td>").text(totalSummFormatted);
+      function bonusQuarter() {
+        if (percentOfCompletedLeads <= 9) {
+          return $("<td>").text(0);
+        }
+        if (percentOfCompletedLeads >= 10 && percentOfCompletedLeads <= 26) {
+          const tenPercent = $("<td>").text(
+            Math.round((totalSumm / 100) * 1).toLocaleString("en-US")
+          );
+          return tenPercent;
+        }
+        if (percentOfCompletedLeads >= 27 && percentOfCompletedLeads <= 99) {
+          const twentySevenPrecent = $("<td>").text(
+            Math.round((totalSumm / 100) * 2.7).toLocaleString("en-US")
+          );
+          return twentySevenPrecent;
+        }
+        if (percentOfCompletedLeads >= 100) {
+          const twentySevenPrecent = $("<td>").text(
+            Math.round((totalSumm / 100) * 10).toLocaleString("en-US")
+          );
+          return twentySevenPrecent;
+        }
       }
-      if (percentOfCompletedLeads >= 10 && percentOfCompletedLeads <= 26) {
-        const tenPercent = $("<td>").text(
-          Math.round((totalSumm / 100) * 1).toLocaleString("en-US")
-        );
-        return tenPercent;
-      }
-      if (percentOfCompletedLeads >= 27 && percentOfCompletedLeads <= 99) {
-        const twentySevenPrecent = $("<td>").text(
-          Math.round((totalSumm / 100) * 2.7).toLocaleString("en-US")
-        );
-        return twentySevenPrecent;
-      }
-      if (percentOfCompletedLeads >= 100) {
-        const twentySevenPrecent = $("<td>").text(
-          Math.round((totalSumm / 100) * 10).toLocaleString("en-US")
-        );
-        return twentySevenPrecent;
-      }
+
+      $row
+        .append($index)
+        .append($name)
+        // .append($percentActiveLeads)
+        // .append($summ)
+        .append(bonusQuarter());
+      fragment.append($row);
     }
-
-    $row
-      .append($index)
-      .append($name)
-      // .append($percentActiveLeads)
-      // .append($summ)
-      .append(bonusQuarter());
-    fragment.append($row);
   });
   $("table tbody").append(fragment);
 }
