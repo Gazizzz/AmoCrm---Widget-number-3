@@ -14,19 +14,91 @@
     <title>Виджет 3</title>
   <script defer src="main.js"></script></head>
   <body>
-    <div class="out3"></div>
-    <div style="font-weight: 600">Период:предыдущий квартал.</div>
+    <div class="header">
+      <div class="header-dropdown">
+        <div class="dropdown">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Квартал
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li>
+              <a class="dropdown-item quarterPeriod" href="#" data-number="1">
+                первый</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item quarterPeriod" href="#" data-number="2"
+                >второй</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item quarterPeriod" href="#" data-number="3"
+                >третий</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item quarterPeriod" href="#" data-number="4"
+                >четвертый</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="dropdown">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Год
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li>
+              <a class="dropdown-item periodYear" href="#" id="year__2023"
+                >2023</a
+              >
+            </li>
+            <li><a class="dropdown-item periodYear" href="#">2024</a></li>
+            <li><a class="dropdown-item periodYear" href="#">2025</a></li>
+            <li><a class="dropdown-item periodYear" href="#">2026</a></li>
+            <li><a class="dropdown-item periodYear" href="#">2027</a></li>
+            <li><a class="dropdown-item periodYear" href="#">2028</a></li>
+            <li><a class="dropdown-item periodYear" href="#">2029</a></li>
+            <li><a class="dropdown-item periodYear" href="#">2030</a></li>
+            <li><a class="dropdown-item periodYear" href="#">2031</a></li>
+            <li><a class="dropdown-item periodYear" href="#">2032</a></li>
+            <li><a class="dropdown-item periodYear" href="#">2033</a></li>
+            <li><a class="dropdown-item periodYear" href="#">2034</a></li>
+            <li><a class="dropdown-item periodYear" href="#">2035</a></li>
+            <li><a class="dropdown-item periodYear" href="#">2036</a></li>
+            <li><a class="dropdown-item periodYear" href="#">2037</a></li>
+            <li><a class="dropdown-item periodYear" href="#">2038</a></li>
+            <li><a class="dropdown-item periodYear" href="#">2039</a></li>
+            <li><a class="dropdown-item periodYear" href="#">2040</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="header-from">Период: 90 дней.</div>
+    </div>
     <table class="table js-table">
       <thead class="thead js-thead">
         <th scope="col">#</th>
         <th scope="col">Cотрудник</th>
-        <!-- <th scope="col">Процент активных компании</th> -->
-        <!-- <th scope="col">Сумма</th> -->
+        <th scope="col" class="js-Center">Процент активных</th>
+        <th scope="col" class="js-Center">Размер квартального бонуса</th>
+        <th scope="col">Сумма</th>
         <th scope="col">Бонус</th>
       </thead>
       <tbody class="js-tbody table-group-divider"></tbody>
     </table>
-
+    <script src="https://unpkg.com/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src=" 
     https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js
     "></script>
