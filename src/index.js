@@ -1,4 +1,5 @@
 import * as dateFns from "date-fns";
+import "./style.css";
 import {
   periodDay,
   yesterday,
@@ -22,29 +23,29 @@ import {
 //     for (let i=0; i < )
 //   if (test1.innerHTML <= 10) {
 //     let test4 = (test3.innerHTML / 100) * 1;
-//     console.log(test4);
+
 //   }
 // };
 // test2();
 
 let monthsWithQuoter = {
-  0: 1,
   1: 1,
   2: 1,
-  3: 2,
+  3: 1,
   4: 2,
   5: 2,
-  6: 3,
+  6: 2,
   7: 3,
   8: 3,
-  9: 4,
+  9: 3,
   10: 4,
   11: 4,
+  12: 4,
 };
 
 let date = new Date();
 const formattedDate = dateFns.format(date, "dd.MM.yyyy");
-
+// console.log(formattedDate);
 function findMonthQuarter(date) {
   let arrDataWithoutDot = date.split(".");
   let [day, month, year] = arrDataWithoutDot;
@@ -60,46 +61,170 @@ function findMonthQuarter(date) {
 // const needSendDate = url.searchParams.get("sendDate") === "true";
 const currentDate = new Date();
 let currentQuater = findMonthQuarter(formattedDate);
-
+// console.log(currentQuater);
 function quarterPrevious() {
-  if (currentQuater > 1) {
-    let previousQuarter = currentQuater - 1;
-    console.log(previousQuarter);
-    if (previousQuarter === 1) {
-      let dateFrom = new Date(`${currentDate.getFullYear()}-01-01`);
-      let timestamptDateFrom = dateFrom.getTime() / 1000;
-      console.log(timestamptDateFrom);
-      let dateTo = new Date(`${currentDate.getFullYear()}-03-31`);
+  if (currentQuater === 1) {
+    let dateFrom = new Date(`${currentDate.getFullYear()}-01-01`);
+    dateFrom.setHours(23);
+    dateFrom.setMinutes(59);
+    dateFrom.setSeconds(59);
+    console.log(dateFrom);
+    let timestamptDateFrom = dateFrom.getTime() / 1000;
 
-      let timestamptDateTo = dateTo.getTime() / 1000;
+    let dateTo = new Date(`${currentDate.getFullYear()}-03-31`);
+    dateTo.setHours(23);
+    dateTo.setMinutes(59);
+    dateTo.setSeconds(59);
 
-      return { timestamptDateFrom, timestamptDateTo };
-    }
-    if (previousQuarter === 2) {
-      let dateFrom = new Date(`${currentDate.getFullYear()}-04-01`);
-      let timestamptDateFrom = dateFrom.getTime() / 1000;
-      let dateTo = new Date(`${currentDate.getFullYear()}-06-30`);
-      let timestamptDateTo = dateTo.getTime() / 1000;
-      return { timestamptDateFrom, timestamptDateTo };
-    }
-    if (previousQuarter === 3) {
-      let dateFrom = new Date(`${currentDate.getFullYear()}-07-01`);
-      let timestamptDateFrom = dateFrom.getTime() / 1000;
-      let dateTo = new Date(`${currentDate.getFullYear()}-09-30`);
-      let timestamptDateTo = dateTo.getTime() / 1000;
-      return { timestamptDateFrom, timestamptDateTo };
-    }
-    if (previousQuarter === 4) {
-      let dateFrom = new Date(`${currentDate.getFullYear()}-10-01`);
-      let timestamptDateFrom = dateFrom.getTime() / 1000;
-      let dateTo = new Date(`${currentDate.getFullYear()}-12-31`);
-      let timestamptDateTo = dateTo.getTime() / 1000;
-      return { timestamptDateFrom, timestamptDateTo };
-    }
+    let timestamptDateTo = dateTo.getTime() / 1000;
+
+    return { timestamptDateFrom, timestamptDateTo };
   }
+  if (currentQuater === 2) {
+    let dateFrom = new Date(`${currentDate.getFullYear()}-04-01`);
+    dateFrom.setHours(23);
+    dateFrom.setMinutes(59);
+    dateFrom.setSeconds(59);
+    console.log(dateFrom);
+    let timestamptDateFrom = dateFrom.getTime() / 1000;
+    let dateTo = new Date(`${currentDate.getFullYear()}-06-30`);
+    dateTo.setHours(23);
+    dateTo.setMinutes(59);
+    dateTo.setSeconds(59);
+    let timestamptDateTo = dateTo.getTime() / 1000;
+    return { timestamptDateFrom, timestamptDateTo };
+  }
+  if (currentQuater === 3) {
+    let dateFrom = new Date(`${currentDate.getFullYear()}-07-01`);
+    dateFrom.setHours(23);
+    dateFrom.setMinutes(59);
+    dateFrom.setSeconds(59);
+    console.log(dateFrom);
+    let timestamptDateFrom = dateFrom.getTime() / 1000;
+    let dateTo = new Date(`${currentDate.getFullYear()}-09-30`);
+    dateTo.setHours(23);
+    dateTo.setMinutes(59);
+    dateTo.setSeconds(59);
+    let timestamptDateTo = dateTo.getTime() / 1000;
+    return { timestamptDateFrom, timestamptDateTo };
+  }
+  if (currentQuater === 4) {
+    let dateFrom = new Date(`${currentDate.getFullYear()}-10-01`);
+    dateFrom.setHours(23);
+    dateFrom.setMinutes(59);
+    dateFrom.setSeconds(59);
+    console.log(dateFrom);
+    let timestamptDateFrom = dateFrom.getTime() / 1000;
+    let dateTo = new Date(`${currentDate.getFullYear()}-12-31`);
+    dateTo.setHours(23);
+    dateTo.setMinutes(59);
+    dateTo.setSeconds(59);
+    let timestamptDateTo = dateTo.getTime() / 1000;
+    return { timestamptDateFrom, timestamptDateTo };
+  }
+}
+let getTimeMonthFrom;
+const headerFrom = document.querySelector(".header-from");
+let yearr = new Date().getFullYear();
+let periodYear = document.querySelectorAll(".periodYear");
+periodYear.forEach((year) => {
+  year.addEventListener("click", (e) => {
+    yearr = e.target.innerHTML;
+  });
+});
+const periodQuarter = document.querySelectorAll(".quarterPeriod");
+
+periodQuarter.forEach((quarter) => {
+  quarter.addEventListener("click", (e) => {
+    const currentQuater = Number(e.target.dataset.number);
+    function quarterPrevious() {
+      if (currentQuater === 1) {
+        let dateFrom = new Date(`${yearr}-01-01`);
+        dateFrom.setHours(0);
+        dateFrom.setMinutes(59);
+        dateFrom.setSeconds(59);
+
+        let timestamptDateFrom = dateFrom.getTime() / 1000;
+
+        let dateTo = new Date(`${yearr}-03-31`);
+        dateTo.setHours(23);
+        dateTo.setMinutes(59);
+        dateTo.setSeconds(59);
+
+        let timestamptDateTo = dateTo.getTime() / 1000;
+
+        return { timestamptDateFrom, timestamptDateTo };
+      }
+      if (currentQuater === 2) {
+        let dateFrom = new Date(`${yearr}-04-01`);
+        dateFrom.setHours(0);
+        dateFrom.setMinutes(0);
+        dateFrom.setSeconds(0);
+        let timestamptDateFrom = dateFrom.getTime() / 1000;
+        let dateTo = new Date(`${yearr}-06-30`);
+        dateTo.setHours(23);
+        dateTo.setMinutes(59);
+        dateTo.setSeconds(59);
+        let timestamptDateTo = dateTo.getTime() / 1000;
+        return { timestamptDateFrom, timestamptDateTo };
+      }
+      if (currentQuater === 3) {
+        let dateFrom = new Date(`${yearr}-07-01`);
+        dateFrom.setHours(0);
+        dateFrom.setMinutes(0);
+        dateFrom.setSeconds(0);
+        let timestamptDateFrom = dateFrom.getTime() / 1000;
+        let dateTo = new Date(`${yearr}-09-30`);
+        dateTo.setHours(23);
+        dateTo.setMinutes(59);
+        dateTo.setSeconds(59);
+        let timestamptDateTo = dateTo.getTime() / 1000;
+        return { timestamptDateFrom, timestamptDateTo };
+      }
+      if (currentQuater === 4) {
+        let dateFrom = new Date(`${yearr}-10-01`);
+        dateFrom.setHours(0);
+        dateFrom.setMinutes(0);
+        dateFrom.setSeconds(0);
+        let timestamptDateFrom = dateFrom.getTime() / 1000;
+        let dateTo = new Date(`${yearr}-12-31`);
+        dateTo.setHours(23);
+        dateTo.setMinutes(59);
+        dateTo.setSeconds(59);
+        let timestamptDateTo = dateTo.getTime() / 1000;
+        return { timestamptDateFrom, timestamptDateTo };
+      }
+    }
+    const quarterNumb = e.target.innerHTML;
+    headerFrom.innerHTML = `Период: ${quarterNumb} квартал ${yearr} года`;
+
+    render({
+      from: quarterPrevious().timestamptDateFrom,
+      to: quarterPrevious().timestamptDateTo,
+      currentQuater,
+    });
+  });
+});
+let periodNinetyDays = new Date();
+periodNinetyDays.setHours(0);
+periodNinetyDays.setMinutes(0);
+periodNinetyDays.setSeconds(0);
+function quarterCurrent() {
+  let resultDate = dateFns.subDays(periodNinetyDays, 90);
+  let timestamptDateFrom = Math.floor(resultDate.getTime() / 1000);
+  let periodNinetyDayEnd = new Date();
+  periodNinetyDayEnd.setHours(0);
+  periodNinetyDayEnd.setMinutes(59);
+  periodNinetyDayEnd.setSeconds(59);
+  let timestamptDateTo = Math.floor(periodNinetyDayEnd.getTime() / 1000);
+  return { timestamptDateFrom, timestamptDateTo };
 }
 
 let filterDateParams = {
+  from: quarterCurrent().timestamptDateFrom,
+  to: quarterCurrent().timestamptDateTo,
+};
+let filterDateParamss = {
   from: quarterPrevious().timestamptDateFrom,
   to: quarterPrevious().timestamptDateTo,
 };
@@ -118,7 +243,7 @@ function loadManagers() {
       dataType: "json", // Expected response data type
 
       success: function (data) {
-        console.log(data);
+        // console.log(data);
         resolve(data);
       },
       error: function (error) {
@@ -127,13 +252,19 @@ function loadManagers() {
     });
   });
 }
-function loadCompanies() {
+
+function loadCompanies(query) {
   return new Promise((resolve, reject) => {
+    const filterQuery = query || filterDateParams;
+    const queryParams = {
+      filterQuery,
+    };
+
     $.ajax({
       url: "https://app.aaccent.su/jenyanour/my/companies_json.php",
       method: "get",
       dataType: "json",
-      data: {},
+      data: filterQuery,
       success: function (data) {
         resolve(data);
       },
@@ -144,16 +275,41 @@ function loadCompanies() {
   });
 }
 function filterLeadsByManager(leads, managerId) {
-  const filteredData = leads.filter(
-    (item) => Number(item.responsible_id) === managerId
-  );
+  // console.log({ query });query = {}
+  const filteredData = leads.filter((item) => {
+    const dateStr = item.created_at;
+    const dateObj = new Date(dateStr);
+    // dateObj.setHours(0, 0);
+    const month = (dateObj.getMonth() + 1).toString().replace(/^0+/, "");
+    // console.log(month);
 
+    function findMonthQuarter(date) {
+      let findQuarter = monthsWithQuoter[date];
+      return findQuarter;
+    }
+
+    const currentQuater = findMonthQuarter(month);
+    // console.log(currentQuater);
+
+    return (
+      Number(item.responsible_id) === managerId
+      // &&
+      //
+      // currentQuater <= query.currentQuater
+      // 2 <= 2
+    );
+  });
+  // console.log(currentQuater);
+  // console.log(query);
+  // console.log(currentQuater <= query.currentQuater);
+  // console.log(typeof currentQuater, typeof query.currentQuater);
   return filteredData;
 }
-function loadLeads(managerId) {
+function loadLeads(query) {
+  const filterQuery = query || filterDateParams;
   const queryParams = {
     type: "filter_leads",
-    data: filterDateParams,
+    data: filterQuery,
   };
 
   return new Promise((resolve, reject) => {
@@ -181,10 +337,11 @@ function filterLeads(leadss, managerId) {
   return filteredDataLeadsCompany;
 }
 
-function loadLeadsComplete(managerId) {
+function loadLeadsComplete(query) {
+  const filterQuery = query || filterDateParamss;
   const queryParams = {
     type: "filter_complete_leads",
-    data: filterDateParams,
+    data: filterQuery,
   };
   return new Promise((resolve, reject) => {
     $.ajax({
@@ -204,13 +361,14 @@ function loadLeadsComplete(managerId) {
 }
 function filterLeadsComplete(leadss, managerId) {
   const filteredDataLeadsComplete = leadss.filter(
-    (item) => Number(item.company_responsible_id) == managerId
+    (item) => Number(item.lead_responsible_id) == managerId
   );
 
   return filteredDataLeadsComplete;
 }
 function renderManagers(managersArr) {
   const fragment = $(document.createDocumentFragment());
+  const tableEl = $(".js-tbody");
   let num = 0;
   managersArr.forEach((manager, index) => {
     if (
@@ -223,17 +381,22 @@ function renderManagers(managersArr) {
       const percentOfCompletedLeads = allLeadsCount
         ? Math.round((manager.leadCount * 100) / allLeadsCount)
         : 0;
-      console.log(percentOfCompletedLeads);
+      // console.log(percentOfCompletedLeads);
       const $row = $("<tr>");
       const $index = $("<td>").text((num = num + 1));
       const $name = $("<td>").text(manager.name);
       const $percentActiveLeads = $("<td>").text(percentOfCompletedLeads + "%");
+      $percentActiveLeads.addClass("js-Center");
       manager.leadsFilterComppleted.map((item, index) => {
         totalSumm += Number(item.lead_sum);
-        console.log(totalSumm);
+        // console.log(totalSumm);
         totalSummFormatted = totalSumm.toLocaleString("en-US");
       });
-      let test222;
+      console.log($percentActiveLeads);
+      const $QuarterlyBonusAmount = $("<td>").text(
+        `${percentOfCompletedLeads / 10}%`
+      );
+      $QuarterlyBonusAmount.addClass("js-Center");
       const $summ = $("<td>").text(totalSummFormatted);
       function bonusQuarter() {
         const Percent = $("<td>").text(
@@ -242,39 +405,21 @@ function renderManagers(managersArr) {
           ).toLocaleString("en-US")
         );
         return Percent;
-        // if (percentOfCompletedLeads <= 9) {
-        //   return $("<td>").text(0);
-        // }
-        // if (percentOfCompletedLeads >= 10 && percentOfCompletedLeads <= 26) {
-        //   const tenPercent = $("<td>").text(
-        //     Math.round((totalSumm / 100) * 1).toLocaleString("en-US")
-        //   );
-        //   return tenPercent;
-        // }
-        // if (percentOfCompletedLeads >= 27 && percentOfCompletedLeads <= 99) {
-        //   const twentySevenPrecent = $("<td>").text(
-        //     Math.round((totalSumm / 100) * 2.7).toLocaleString("en-US")
-        //   );
-        //   return twentySevenPrecent;
-        // }
-        // if (percentOfCompletedLeads >= 100) {
-        //   const twentySevenPrecent = $("<td>").text(
-        //     Math.round((totalSumm / 100) * 10).toLocaleString("en-US")
-        //   );
-        //   return twentySevenPrecent;
-        // }
       }
 
       $row
         .append($index)
         .append($name)
-        // .append($percentActiveLeads)
-        // .append($summ)
+        // .append(totalSummFormatted)
+        .append($percentActiveLeads)
+        .append($QuarterlyBonusAmount)
+        .append($summ)
         .append(bonusQuarter());
       fragment.append($row);
     }
   });
-  $("table tbody").append(fragment);
+  tableEl.empty();
+  tableEl.append(fragment);
 }
 function filterLeads2(leadss, amo_id) {
   const filteredDatas = leadss.filter((item) => item.amo_company_id == amo_id);
@@ -282,12 +427,13 @@ function filterLeads2(leadss, amo_id) {
   return filteredDatas;
 }
 
-async function render() {
+async function render(query) {
   const managers = await loadManagers();
   // 1. загрузить все лиды
-  const allCompanies = await loadCompanies();
-  const leads = await loadLeads();
-  const leadsCompleted = await loadLeadsComplete();
+  const allCompanies = await loadCompanies(query);
+
+  const leads = await loadLeads(query);
+  const leadsCompleted = await loadLeadsComplete(query);
   const allLeadsWithCompanies = allCompanies.map((company) => {
     const companyLeads = filterLeads2(leads, company.amo_id);
 
@@ -301,8 +447,7 @@ async function render() {
   const secondManage = "6889038";
   const newManagerListWithLeads = managers.map(async (item) => {
     // отфильтолвать лиды по менеджеру
-    const allManagerLeads = filterLeadsByManager(allCompanies, item.id);
-
+    const allManagerLeads = filterLeadsByManager(allCompanies, item.id, query);
     const leadsFilterCompany = filterLeads(leads, item.id);
 
     const leadsFilterComppleted = filterLeadsComplete(leadsCompleted, item.id);
@@ -315,9 +460,11 @@ async function render() {
         );
       }
     );
+    filteredCompaniesByManager.forEach((item) => {});
     const leadCount = filteredCompaniesByManager.reduce((acc, curr) => {
       if (curr.responsible_id == item.id) {
         acc = acc + 1;
+        console.log(curr);
       }
 
       return acc;
@@ -334,5 +481,16 @@ async function render() {
 
   console.log(result);
   renderManagers(result);
+  const centerStyle = document.querySelectorAll(".js-Center");
+  console.log(centerStyle);
+  centerStyle.forEach((element) => {
+    element.style.textAlign = "center";
+  });
 }
-render();
+render({
+  from: quarterCurrent().timestamptDateFrom,
+  to: quarterCurrent().timestamptDateTo,
+  // from: quarterPrevious().timestamptDateFrom,
+  // to: quarterPrevious().timestamptDateTo,
+  currentQuater,
+});
