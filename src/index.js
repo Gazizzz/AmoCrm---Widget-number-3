@@ -1,33 +1,3 @@
-import * as dateFns from "date-fns";
-import "./style.css";
-import {
-  periodDay,
-  yesterday,
-  startEndWeek,
-  month,
-  strDatefrom,
-  strDateto,
-  url,
-} from "./helpers.js";
-
-// что подаем на вход:
-//  arrDatefrom;
-// что возвращаем  - return quarter
-
-// (man[i].summ / 100) * 1(man[i].summ / 100) * 1;
-
-// let test1 = document.querySelector(".precent");
-// let test3 = document.querySelector(".sum");
-
-// function test2() {
-//     for (let i=0; i < )
-//   if (test1.innerHTML <= 10) {
-//     let test4 = (test3.innerHTML / 100) * 1;
-
-//   }
-// };
-// test2();
-
 let monthsWithQuoter = {
   1: 1,
   2: 1,
@@ -44,8 +14,15 @@ let monthsWithQuoter = {
 };
 
 let date = new Date();
-const formattedDate = dateFns.format(date, "dd.MM.yyyy");
-// console.log(formattedDate);
+// const formattedDate = dateFns.format(date, "dd.MM.yyyy");
+const formattedDate = new Date()
+  .toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  })
+  .split("/")
+  .join(".");
 function findMonthQuarter(date) {
   let arrDataWithoutDot = date.split(".");
   let [day, month, year] = arrDataWithoutDot;
@@ -61,14 +38,12 @@ function findMonthQuarter(date) {
 // const needSendDate = url.searchParams.get("sendDate") === "true";
 const currentDate = new Date();
 let currentQuater = findMonthQuarter(formattedDate);
-// console.log(currentQuater);
 function quarterPrevious() {
   if (currentQuater === 1) {
     let dateFrom = new Date(`${currentDate.getFullYear()}-01-01`);
     dateFrom.setHours(23);
     dateFrom.setMinutes(59);
     dateFrom.setSeconds(59);
-    console.log(dateFrom);
     let timestamptDateFrom = dateFrom.getTime() / 1000;
 
     let dateTo = new Date(`${currentDate.getFullYear()}-03-31`);
@@ -85,7 +60,6 @@ function quarterPrevious() {
     dateFrom.setHours(23);
     dateFrom.setMinutes(59);
     dateFrom.setSeconds(59);
-    console.log(dateFrom);
     let timestamptDateFrom = dateFrom.getTime() / 1000;
     let dateTo = new Date(`${currentDate.getFullYear()}-06-30`);
     dateTo.setHours(23);
@@ -99,7 +73,6 @@ function quarterPrevious() {
     dateFrom.setHours(23);
     dateFrom.setMinutes(59);
     dateFrom.setSeconds(59);
-    console.log(dateFrom);
     let timestamptDateFrom = dateFrom.getTime() / 1000;
     let dateTo = new Date(`${currentDate.getFullYear()}-09-30`);
     dateTo.setHours(23);
@@ -113,7 +86,6 @@ function quarterPrevious() {
     dateFrom.setHours(23);
     dateFrom.setMinutes(59);
     dateFrom.setSeconds(59);
-    console.log(dateFrom);
     let timestamptDateFrom = dateFrom.getTime() / 1000;
     let dateTo = new Date(`${currentDate.getFullYear()}-12-31`);
     dateTo.setHours(23);
@@ -210,7 +182,10 @@ periodNinetyDays.setHours(0);
 periodNinetyDays.setMinutes(0);
 periodNinetyDays.setSeconds(0);
 function quarterCurrent() {
-  let resultDate = dateFns.subDays(periodNinetyDays, 90);
+  // let resultDate = dateFns.subDays(periodNinetyDays, 90);
+  const resultDate = new Date(
+    new Date(periodNinetyDays).getTime() - 90 * 24 * 60 * 60 * 1000
+  );
   let timestamptDateFrom = Math.floor(resultDate.getTime() / 1000);
   let periodNinetyDayEnd = new Date();
   periodNinetyDayEnd.setHours(0);
@@ -236,14 +211,13 @@ function loadManagers() {
 
   return new Promise((resolve, reject) => {
     $.ajax({
-      url: "https://app.aaccent.su/jenyanour/",
+      url: "https://amaranta.im3000.ru/bot/widget/my/users_json.php",
       type: "post",
       data: queryParams,
 
       dataType: "json", // Expected response data type
 
       success: function (data) {
-        // console.log(data);
         resolve(data);
       },
       error: function (error) {
@@ -261,7 +235,7 @@ function loadCompanies(query) {
     };
 
     $.ajax({
-      url: "https://app.aaccent.su/jenyanour/my/companies_json.php",
+      url: "https://amaranta.im3000.ru/bot/widget/my/companies_json.php",
       method: "get",
       dataType: "json",
       data: filterQuery,
@@ -275,13 +249,11 @@ function loadCompanies(query) {
   });
 }
 function filterLeadsByManager(leads, managerId) {
-  // console.log({ query });query = {}
   const filteredData = leads.filter((item) => {
     const dateStr = item.created_at;
     const dateObj = new Date(dateStr);
     // dateObj.setHours(0, 0);
     const month = (dateObj.getMonth() + 1).toString().replace(/^0+/, "");
-    // console.log(month);
 
     function findMonthQuarter(date) {
       let findQuarter = monthsWithQuoter[date];
@@ -289,7 +261,6 @@ function filterLeadsByManager(leads, managerId) {
     }
 
     const currentQuater = findMonthQuarter(month);
-    // console.log(currentQuater);
 
     return (
       Number(item.responsible_id) === managerId
@@ -299,10 +270,7 @@ function filterLeadsByManager(leads, managerId) {
       // 2 <= 2
     );
   });
-  // console.log(currentQuater);
-  // console.log(query);
-  // console.log(currentQuater <= query.currentQuater);
-  // console.log(typeof currentQuater, typeof query.currentQuater);
+
   return filteredData;
 }
 function loadLeads(query) {
@@ -314,7 +282,7 @@ function loadLeads(query) {
 
   return new Promise((resolve, reject) => {
     $.ajax({
-      url: "https://app.aaccent.su/jenyanour/",
+      url: "https://amaranta.im3000.ru/bot/widget/",
       type: "POST",
 
       data: queryParams,
@@ -345,7 +313,7 @@ function loadLeadsComplete(query) {
   };
   return new Promise((resolve, reject) => {
     $.ajax({
-      url: "https://app.aaccent.su/jenyanour/",
+      url: "https://amaranta.im3000.ru/bot/widget/",
       type: "post",
       data: queryParams,
 
@@ -371,52 +339,51 @@ function renderManagers(managersArr) {
   const tableEl = $(".js-tbody");
   let num = 0;
   managersArr.forEach((manager, index) => {
-    if (
-      manager.name == "Евгения Ф. 8(909)886-75-17 (Кредитный специалист)" ||
-      manager.name == "Мариам А. 8(918)916-96-50 (Кредитный специалист)"
-    ) {
-      let totalSumm = 0;
-      let totalSummFormatted;
-      const allLeadsCount = manager.allManagerLeads.length;
-      const percentOfCompletedLeads = allLeadsCount
-        ? Math.round((manager.leadCount * 100) / allLeadsCount)
-        : 0;
-      // console.log(percentOfCompletedLeads);
-      const $row = $("<tr>");
-      const $index = $("<td>").text((num = num + 1));
-      const $name = $("<td>").text(manager.name);
-      const $percentActiveLeads = $("<td>").text(percentOfCompletedLeads + "%");
-      $percentActiveLeads.addClass("js-Center");
-      manager.leadsFilterComppleted.map((item, index) => {
-        totalSumm += Number(item.lead_sum);
-        // console.log(totalSumm);
-        totalSummFormatted = totalSumm.toLocaleString("en-US");
-      });
-      console.log($percentActiveLeads);
-      const $QuarterlyBonusAmount = $("<td>").text(
-        `${percentOfCompletedLeads / 10}%`
-      );
-      $QuarterlyBonusAmount.addClass("js-Center");
-      const $summ = $("<td>").text(totalSummFormatted);
-      function bonusQuarter() {
-        const Percent = $("<td>").text(
-          Math.round(
-            (totalSumm / 100) * (percentOfCompletedLeads / 10)
-          ).toLocaleString("en-US")
-        );
-        return Percent;
-      }
+    let totalSumm = 0;
+    let totalSummFormatted;
+    const allLeadsCount = manager.allManagerLeads.length;
+    const percentOfCompletedLeads = allLeadsCount
+      ? Math.round((manager.leadCount * 100) / allLeadsCount)
+      : 0;
 
-      $row
-        .append($index)
-        .append($name)
-        // .append(totalSummFormatted)
-        .append($percentActiveLeads)
-        .append($QuarterlyBonusAmount)
-        .append($summ)
-        .append(bonusQuarter());
-      fragment.append($row);
+    const $row = $("<tr>");
+    const $index = $("<td>").text((num = num + 1));
+    const $name = $("<td>").text(manager.name);
+    const $percentActiveLeads = $("<td>").text(percentOfCompletedLeads + "%");
+    $percentActiveLeads.addClass("js-Center");
+    manager.leadsFilterComppleted.map((item, index) => {
+      totalSumm += Number(item.lead_sum);
+
+      totalSummFormatted = totalSumm.toLocaleString("en-US");
+    });
+    if (totalSumm < 0) {
+      totalSummFormatted = 0;
+    } else {
+      totalSummFormatted = totalSumm.toLocaleString("en-US");
     }
+    const $QuarterlyBonusAmount = $("<td>").text(
+      `${percentOfCompletedLeads / 10}%`
+    );
+    $QuarterlyBonusAmount.addClass("js-Center");
+    const $summ = $("<td>").text(totalSummFormatted);
+    function bonusQuarter() {
+      const Percent = $("<td>").text(
+        Math.round(
+          (totalSumm / 100) * (percentOfCompletedLeads / 10)
+        ).toLocaleString("en-US")
+      );
+      return Percent;
+    }
+
+    $row
+      .append($index)
+      .append($name)
+      // .append(totalSummFormatted)
+      .append($percentActiveLeads)
+      .append($QuarterlyBonusAmount)
+      .append($summ)
+      .append(bonusQuarter());
+    fragment.append($row);
   });
   tableEl.empty();
   tableEl.append(fragment);
@@ -443,8 +410,6 @@ async function render(query) {
     };
   });
 
-  const firstManager = "9206253";
-  const secondManage = "6889038";
   const newManagerListWithLeads = managers.map(async (item) => {
     // отфильтолвать лиды по менеджеру
     const allManagerLeads = filterLeadsByManager(allCompanies, item.id, query);
@@ -454,17 +419,14 @@ async function render(query) {
     const filteredCompaniesByManager = allLeadsWithCompanies.filter(
       (company) => {
         return (
-          company.companyLeads.length > 0 &&
-          (company.responsible_id == firstManager ||
-            company.responsible_id == secondManage)
+          company.companyLeads.length > 0 && company.responsible_id == item.id
         );
       }
     );
-    filteredCompaniesByManager.forEach((item) => {});
+
     const leadCount = filteredCompaniesByManager.reduce((acc, curr) => {
       if (curr.responsible_id == item.id) {
         acc = acc + 1;
-        console.log(curr);
       }
 
       return acc;
@@ -479,10 +441,9 @@ async function render(query) {
   });
   const result = await Promise.all(newManagerListWithLeads);
 
-  console.log(result);
   renderManagers(result);
   const centerStyle = document.querySelectorAll(".js-Center");
-  console.log(centerStyle);
+
   centerStyle.forEach((element) => {
     element.style.textAlign = "center";
   });
@@ -490,7 +451,6 @@ async function render(query) {
 render({
   from: quarterCurrent().timestamptDateFrom,
   to: quarterCurrent().timestamptDateTo,
-  // from: quarterPrevious().timestamptDateFrom,
-  // to: quarterPrevious().timestamptDateTo,
+
   currentQuater,
 });
