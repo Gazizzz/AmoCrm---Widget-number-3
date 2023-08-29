@@ -1,16 +1,1 @@
-body {
-}
-.header {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-}
-.header-dropdown {
-  display: flex;
-}
-.dropdown {
-  margin-right: 10px;
-}
-.header-from {
-  font-weight: 600;
-}
+
